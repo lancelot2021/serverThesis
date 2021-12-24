@@ -3,11 +3,13 @@ const adminService = require('../service/admin-service');
 class AdminController{
     async registration(req, res, next) {
         try {
-            const {login, email, password} = req.body;
+            // const {login, email, password} = req.body;
+            const login = req.body.login;
+            const email = req.body.email;
+            const password = req.body.password;
             const adminData = await adminService.registration(login, email, password);
             res.cookie('refreshToken', adminData.refreshToken, {maxAge: 30 * 24 * 60 * 1000, httpOnly: true})
             return res.json(adminData);
-
         }catch (e){
 
         }

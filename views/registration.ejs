@@ -2,9 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Реєстрація</title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
+<div class="container reg_form">
+    <form class="row justify-content-md-center">
+        <h2 class="col-12">Реєстрація</h2>
+        <div class="mb-3 col-12 col-md-4">
+            <label for="formGroupExampleInput" class="form-label">Логін</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" name="login" placeholder="Введіть логін системного адміністратора">
+        </div>
+        <div class="w-100"></div>
+        <div class="mb-3 col-12 col-md-4">
+            <label for="exampleInputEmail1" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Ваш e-mail не буде використовуватися для спама</div>
+        </div>
+        <div class="w-100"></div>
+        <div class="mb-3 col-12 col-md-4">
+            <label for="exampleInputPassword1" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="w-100"></div>
+        <div class="mb-3 col-12 col-md-4">
+            <label for="exampleInputPassword1" class="form-label">Підтвердження паролю</label>
+            <input type="password" class="form-control" name="password" id="exampleInputPassword2">
+        </div>
+        <div class="w-100"></div>
+        <div class="bottom_buttons mb-3 col-12 col-md-4">
+            <button onclick="addAdminToDB()" class="btn btn-secondary">Зареєструватися</button>
+            <a href="authorize">Авторизуватися</a>
+        </div>
+    </form>
+</div>
+<script>
+    function addAdminToDB(){
+        let login = document.getElementById('formGroupExampleInput').value;
+        let email = document.getElementById('exampleInputEmail1').value;
+        let password = document.getElementById('exampleInputPassword2').value;
+        let response = fetch("/api/registration", {
+            method: "POST",
+            headers: {"Accept": "application/json", "Content-Type": "application/json"},
+            body: JSON.stringify({
+                login: login,
+                email: email,
+                password: password
+            })
+        });
+    }
+</script>
 </body>
 </html>

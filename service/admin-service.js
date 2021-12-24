@@ -17,8 +17,9 @@ class AdminService {
         }
         const hashPassword = await bcrypt.hash(password, 3);
         const activationLink = uuid.v4();
+
         const admin = await AdminModel.create({login, email, password: hashPassword, activationLink});
-        await mailService.sendActivationMail(email, activationLink);
+        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
         const adminDto = new AdminDto(admin); // id, email, isActivated
         const tokens = tokenService.generateTokens({...adminDto});
