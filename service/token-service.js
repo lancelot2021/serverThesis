@@ -11,6 +11,24 @@ class TokenService {
         }
     }
 
+    validateAccessToken(token) {
+        try {
+            const adminData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+            return adminData;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    validateRefreshToken(token) {
+        try {
+            const adminData = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+            return adminData;
+        } catch (e) {
+            return null;
+        }
+    }
+
     async saveToken(adminId, refreshToken) {
         const tokenData = await tokenModel.findOne({admin: adminId})
         if(tokenData) {
@@ -19,6 +37,16 @@ class TokenService {
         }
         const token = await tokenModel.create({admin: adminId, refreshToken})
         return token;
+    }
+
+    async removeToken(refreshToken) {
+        const tokenData = await tokenModel.deleteOne({refreshToken})
+        return tokenData;
+    }
+
+    async findToken(refreshToken) {
+        const tokenData = await tokenModel.findOne({refreshToken})
+        return tokenData;
     }
 }
 

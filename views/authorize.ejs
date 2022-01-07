@@ -29,10 +29,24 @@
         </div>
         <div class="w-100"></div>
         <div class="bottom_buttons mb-3 col-12 col-md-4">
-            <button type="submit" class="btn btn-secondary">Ввійти</button>
+            <button class="btn btn-secondary" onclick="login()">Ввійти</button>
             <a href="registration">Зареєструватися</a>
         </div>
     </form>
 </div>
+<script>
+    function login(){
+        let email = document.getElementById('exampleInputEmail1').value;
+        let password = document.getElementById('exampleInputPassword1').value;
+        let response = fetch("/api/authorize", {
+            method: "POST",
+            headers: {"Accept": "application/json", "Content-Type": "application/json"},
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+    }
+</script>
 </body>
 </html>
